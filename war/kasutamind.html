@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/style.css"></link>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type='text/javascript' src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type='text/javascript'>window.onload = google.load('visualization', '1', {packages:['table']});</script>
+<title>Valimind</title>
+</head>
+<body class="sisuTaust">
+  <div id="big_wrapper">
+	<header id="top_header"><p>****Antud rakendus ei ole mõeldud kasutamiseks reaalsetel valimistel***</p></header>
+
+	<nav id="mainMenu">
+		<ul class="nav current-about">
+			<li class="kodu"><a href="#kodu">Kodu</a></li>
+			<li class="kandidaadid"><a href="#kandidaadid">Kandidaadid</a></li>
+			<li class="statistika"><a href="#statistika">Statistika</a></li>
+			<li class="tulemused"><a href="#tulemused">Tulemused</a></li>
+			<li class="kandideeri"><a href="#kandideeri">Kandideeri</a></li>
+			<li class="hääleta"><a href="#hääleta">Hääleta</a></li>
+			<li class="tulemusedKaardil"><a href="#tulemused_kaardil">Tulemused kaardil</a></li>
+			<li class="logi_sisse"><a href="index.html">Välju</a></li>	
+		</ul>	
+	</nav>
+<div id="content">
+		<div class="kodu" id="kodu"><!-- Tervitus -->
+			<p></p>
+			<br>
+			<p>Tere tulemast poliitikahuviline. Olete sattunud 2013. aasta e-valimiste lehele. Siin saate te oma kodanikukohust täita.</p>
+		</div><hr>
+
+		<div class="kandidaadid" id ="kandidaadid"><!-- Kandidaadid -->
+			<form action="AllCandidates"  method="GET" >
+							<br> <input type="button" id="list" value="Kuva kandidaadid" 
+							onclick="drawKandidaadid()" />
+			</form>	
+			<form id="findbyName" action="FindByName" method="get">
+				<input id="eesnimi" name="eesnimi" type="text" value="Eesnimi">	
+				<input id="perenimi" name="perenimi" type="text" value="Perenimi">
+				<input id="otsus3" type="button" onclick="drawFindByName()"  value="Otsi">
+	</form>
+	<form id="findbyParty" action="FindByParty" method="get">
+			<input id="partei" name="partei" type="text" value="partei">
+			<input id="otsus3" type="button" onclick="drawFindByParty()" value="Otsi">
+	</form>
+			<div id="table_div">
+
+			</div><!-- erakonnad -->
+			<div id="table_div5">
+			</div>
+			
+			<div id="table_div6">
+			</div>
+		
+		</div><hr>
+
+		<div class="statistika" id="statistika"><!-- Stat -->
+			<div class="sisu">
+			<form action="StatisticByParty" method="get">
+				<br><input type="button" value="Kuva parteide lõikes" onclick="drawStatisticByParty()">
+			</form>
+			<form action="StatisticByRegion" method="get">
+				<br><input type="button" value="Kuva regiooniti" onclick="drawStatisticByregion()">
+			</form>
+			<div id="table_div2">
+			</div>
+			<div id="table_div3"> 
+			</div>
+		</div>
+		</div><hr>
+
+		<div class="tulemused" id="tulemused"><!-- Tulemused -->
+
+			<div class="sisu">
+
+
+			<form action="StatisticByCountry" method="get">
+				<input id="otsus" type="button" id="n2ita" onclick="drawStatisticByCountry()" value="Kuva tulemused"/>
+			</form>
+
+			<div id="table_div1">
+			</div>		
+			</div>
+		</div><hr>
+		<div class="kandideeri" id="kandideeri"> <!--  Kandideeri -->
+			<div class="sisu">
+				<form id="Lisa" action ="AddAsCandidate" method="post">
+ 				<fieldset>
+  			<legend>Kandidatuuri esitamine</legend>
+  			Eesnimi: <input id="eesnimi1" name="eesnimi" type="text"><br><p id="nimiviga"></p>
+  			Perenimi: <input id="perenimi1" name="perenimi" type="text"><br><p id="perenimiviga"></p>
+  			Sünnikuupäev: <input id="Bday" name="Bday" type="text"><br><p id="kuuviga"></p> 
+  			Piirkond: <select id="regioon1" name="regioon">
+  				<option value="Tartumaa">Tartumaa</option>
+  				<option value="Harjumaa">Harjumaa</option>
+  				<option value="Valgamaa">Valgamaa</option>
+  			</select>
+  			Erakond: <select id="partei1" name="partei">
+  				<option value="IRL">IRL</option>
+  				<option value="Reformierakond">Reformierakond</option>
+  				<option value="Üksikandidaat">Üksikkandidaat</option>
+  				</select>  		
+ 				</fieldset>
+				<input type="button" id="kandi" value="Kandideeri" onclick="KontrolliSisend()"/>
+			</form>
+			</div>
+		</div><hr>
+		<div class="hööleta" id="hääleta">
+			<div class="sisu">
+				<form id="Voting" action="Vote" method="post">	
+		<div id="regioon2" >
+			<select name="regioon2">
+  					<option value="Põlvamaa">Põlvamaa</option>
+  					<!--option value="Harjumaa">Harjumaa</option>
+  					<option value="Valgamaa">Valgamaa</option-->
+  			</select>
+  			</div>
+			<div id="partei2"></div>
+				<select name="partei2">
+  						<option value="IRL">IRL</option>
+  						<option value="Reformierakond">Reformierakond</option>
+  						<option value="Keskerakond">Keskerakond</option>
+  				</select>
+				<div id="kandidaat2">
+					<select name="kandidaat2">
+  						<option value="Teemu Perl">Teemu Perl</option>
+  						<option value="Peeter Python">Peeter Python</option>
+  						<option value="John Java">Teemu Perl</option>
+  					</select></div>	
+				<input  id="otsus1" type="button" id="voter" value="Kinnita valik" onclick="confirmVote()">
+			</form>
+			</div>
+		</div><hr>
+		<div class="tulemusedKaardil" id="tulemusedKaardil">
+			<div class="sisu">
+				<button onclick="drawMap()">KuvaMap</button>				
+				<div id=googleMap>
+				</div>
+			</div>
+		</div>
+	<footer>
+		<p>***Rakenduses realiseertiud e-valimiste näide on realiseertud tehnoloogiate praktiseerimise eesmärgil ning ei ole mõeldud reaalseste e-valimiste korraldamiseks.Kokkulangevused reaalse e-valimiste protsessiga on juhuslikud***</p>
+		<p>Copyright ut-valimind 2013</p>
+	</footer>
+</div>
+</div>	
+</body>
+</html>
